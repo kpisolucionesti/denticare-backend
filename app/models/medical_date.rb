@@ -1,0 +1,2 @@
+class MedicalDate < ApplicationRecord
+end
