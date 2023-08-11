@@ -10,34 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_11_013022) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_021525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "doctors", force: :cascade do |t|
-    t.integer "ci"
-    t.string "name"
+    t.string "first_name"
+    t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "medical_sessions", force: :cascade do |t|
-    t.date "ingress_date"
-    t.bigint "patient_id_id"
-    t.bigint "doctor_id_id"
-    t.bigint "room_id_id"
-    t.bigint "treatment_id_id"
+    t.date "check_in"
+    t.bigint "patient_id"
+    t.bigint "doctor_id"
+    t.bigint "room_id"
+    t.bigint "treatment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["doctor_id_id"], name: "index_medical_sessions_on_doctor_id_id"
-    t.index ["patient_id_id"], name: "index_medical_sessions_on_patient_id_id"
-    t.index ["room_id_id"], name: "index_medical_sessions_on_room_id_id"
-    t.index ["treatment_id_id"], name: "index_medical_sessions_on_treatment_id_id"
+    t.index ["doctor_id"], name: "index_medical_sessions_on_doctor_id"
+    t.index ["patient_id"], name: "index_medical_sessions_on_patient_id"
+    t.index ["room_id"], name: "index_medical_sessions_on_room_id"
+    t.index ["treatment_id"], name: "index_medical_sessions_on_treatment_id"
   end
 
   create_table "patients", force: :cascade do |t|
     t.integer "ci"
-    t.string "name"
+    t.string "first_name"
+    t.string "last_name"
     t.date "birth_date"
     t.string "gender"
     t.datetime "created_at", null: false
@@ -45,7 +46,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_013022) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -61,7 +61,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_11_013022) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password"
+    t.integer "job_id_id"
+    t.integer "role_id_id"
   end
 
 end
