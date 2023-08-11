@@ -10,35 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_150539) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_11_011850) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "doctors", force: :cascade do |t|
     t.integer "ci"
     t.string "name"
-    t.bigint "speciality_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["speciality_id"], name: "index_doctors_on_speciality_id"
-  end
-
-  create_table "jobs", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "medical_dates", force: :cascade do |t|
-    t.bigint "patient_id"
+  create_table "medical_sessions", force: :cascade do |t|
     t.date "ingress_date"
-    t.bigint "doctor_id"
-    t.bigint "room_id"
+    t.bigint "patient_id_id"
+    t.bigint "doctor_id_id"
+    t.bigint "room_id_id"
+    t.bigint "treatment_id_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["doctor_id"], name: "index_medical_dates_on_doctor_id"
-    t.index ["patient_id"], name: "index_medical_dates_on_patient_id"
-    t.index ["room_id"], name: "index_medical_dates_on_room_id"
+    t.index ["doctor_id_id"], name: "index_medical_sessions_on_doctor_id_id"
+    t.index ["patient_id_id"], name: "index_medical_sessions_on_patient_id_id"
+    t.index ["room_id_id"], name: "index_medical_sessions_on_room_id_id"
+    t.index ["treatment_id_id"], name: "index_medical_sessions_on_treatment_id_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -50,21 +44,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_150539) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.string "permission"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "rooms", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "specialities", force: :cascade do |t|
-    t.string "name"
+  create_table "treatments", force: :cascade do |t|
+    t.string "treatment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

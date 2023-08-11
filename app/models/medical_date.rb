@@ -1,2 +1,0 @@
-class MedicalDate < ApplicationRecord
-end
