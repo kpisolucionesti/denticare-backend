@@ -1,5 +1,6 @@
 class DoctorRepresenter < Representable::Decorator
     include Representable::JSON
     property :id
-    property :name
+    property :first_name
+    property :last_name
 end
