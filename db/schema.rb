@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_12_014314) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_030917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,10 +29,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_12_014314) do
     t.bigint "treatment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
     t.index ["doctor_id"], name: "index_medical_sessions_on_doctor_id"
     t.index ["patient_id"], name: "index_medical_sessions_on_patient_id"
     t.index ["room_id"], name: "index_medical_sessions_on_room_id"
     t.index ["treatment_id"], name: "index_medical_sessions_on_treatment_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.bigint "patient_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_notes_on_patient_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -43,6 +52,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_12_014314) do
     t.string "gender"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "phone"
+    t.integer "balance"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "patient_id"
+    t.string "payment_type"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_payments_on_patient_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -55,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_12_014314) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "amount"
   end
 
   create_table "users", force: :cascade do |t|
