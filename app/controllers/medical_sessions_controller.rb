@@ -3,13 +3,13 @@ class MedicalSessionsController < ApplicationController
     
     def index
         medicalsessions = MedicalSession.all
-        render json: ::MedicalSessionRepresenter.for_collection.new(medicalsessions),status: :ok
+        render json: MedicalSessionRepresenter.for_collection.new(medicalsessions),status: :ok
     end
 
     def create
         medicalsession = MedicalSession.new(medicalsession_params)
         if medicalsession.save
-            render json: ::MedicalSessionRepresenter.new(medicalsession),status: :created
+            render json: MedicalSessionRepresenter.new(medicalsession),status: :created
         else
             render json: {error: "No se pudo guardar"},status: :unprocessable_entity
         end
@@ -17,7 +17,7 @@ class MedicalSessionsController < ApplicationController
 
     def update
         if @medicalsession.update(medicalsession_params)
-            render json: ::MedicalSessionRepresenter.new(@medicalsession),status: :ok
+            render json: MedicalSessionRepresenter.new(@medicalsession),status: :ok
         else
             render json: {error: "No se pudo guardar"},status: :unprocessable_entity
         end    

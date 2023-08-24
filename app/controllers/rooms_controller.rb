@@ -3,13 +3,13 @@ class RoomsController < ApplicationController
     
     def index
         rooms = Room.all
-        render json: ::RoomRepresenter.for_collection.new(rooms),status: :ok
+        render json: RoomRepresenter.for_collection.new(rooms),status: :ok
     end
 
     def create
         room = Room.new(room_params)
         if room.save
-            render json: ::RoomRepresenter.new(room),status: :created
+            render json: RoomRepresenter.new(room),status: :created
         else
             render json: {error: "No se pudo guardar"},status: :unprocessable_entity
         end
@@ -17,7 +17,7 @@ class RoomsController < ApplicationController
 
     def update
         if @room.update(room_params)
-            render json: ::RoomRepresenter.new(@room),status: :ok
+            render json: RoomRepresenter.new(@room),status: :ok
         else
             render json: {error: "No se pudo guardar"},status: :unprocessable_entity
         end    

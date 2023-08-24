@@ -3,13 +3,13 @@ class PatientsController < ApplicationController
     
     def index
         patients = Patient.all
-        render json: ::PatientRepresenter.for_collection.new(patients),status: :ok
+        render json: PatientRepresenter.for_collection.new(patients),status: :ok
     end
 
     def create
         patient = Patient.new(patient_params)
         if patient.save
-            render json: ::PatientRepresenter.new(patient),status: :created
+            render json: PatientRepresenter.new(patient),status: :created
         else
             render json: {error: "No se pudo guardar"},status: :unprocessable_entity
         end
@@ -17,7 +17,7 @@ class PatientsController < ApplicationController
 
     def update
         if @patient.update(patient_params)
-            render json: ::PatientRepresenter.new(@patient),status: :ok
+            render json: PatientRepresenter.new(@patient),status: :ok
         else
             render json: {error: "No se pudo guardar"},status: :unprocessable_entity
         end    
