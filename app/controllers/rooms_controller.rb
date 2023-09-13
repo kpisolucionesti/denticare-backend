@@ -1,4 +1,5 @@
 class RoomsController < ApplicationController
+    rescue_from  ActiveRecord::RecordNotFound, with: :room_not_found
     before_action :set_room, only: [:update, :destroy, :show]
     
     def index
@@ -23,12 +24,25 @@ class RoomsController < ApplicationController
         end    
     end
 
+    def show
+        render json: RoomRepresenter.new(@room),status: :ok
+    end
+
+    def destroy
+        @room.destroy
+        render json: {}, status: :no_content
+    end
+
     private
     def room_params
         params.permit(:name)
     end
 
-    def set_patient
+    def set_room
         @room = Room.find(params[:id])
+    end
+
+    def room_not_found
+        render json: { error: "Room not found" }, status: :not_found
     end
 end
