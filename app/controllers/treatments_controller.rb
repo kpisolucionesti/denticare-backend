@@ -1,4 +1,5 @@
 class TreatmentsController < ApplicationController
+    rescue_from  ActiveRecord::RecordNotFound, with: :treatment_not_found
     before_action :set_treatment, only: [:update, :destroy, :show]
     
     def index
@@ -23,6 +24,15 @@ class TreatmentsController < ApplicationController
         end    
     end
 
+    def show
+        render json: TreatmentRepresenter.new(@treatment),status: :ok
+    end
+
+    def destroy
+        @treatment.destroy
+        render json: {}, status: :no_content
+    end
+
     private
     def treatment_params
         params.permit(:name, :amount)
@@ -30,5 +40,9 @@ class TreatmentsController < ApplicationController
 
     def set_treatment
         @treatment = Treatment.find(params[:id])
+    end
+
+    def treatment_not_found
+        render json: { error: "Treatment not found" }, status: :not_found
     end
 end

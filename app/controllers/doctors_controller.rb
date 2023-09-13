@@ -1,4 +1,5 @@
 class DoctorsController < ApplicationController
+    rescue_from  ActiveRecord::RecordNotFound, with: :doctor_not_found
     before_action :set_doctor, only: [:update, :destroy, :show]
     
     def index
@@ -23,6 +24,15 @@ class DoctorsController < ApplicationController
         end    
     end
 
+    def show
+        render json: DoctorRepresenter.new(@doctor),status: :ok
+    end
+
+    def destroy
+        @doctor.destroy
+        render json: {}, status: :no_content
+    end
+
     private
     def doctor_params
         params.permit(:first_name, :last_name)
@@ -30,5 +40,9 @@ class DoctorsController < ApplicationController
 
     def set_doctor
         @doctor = Doctor.find(params[:id])
+    end
+
+    def doctor_not_found
+        render json: { error: "Doctor not found" }, status: :not_found
     end
 end
